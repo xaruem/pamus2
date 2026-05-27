@@ -98,8 +98,11 @@ header {
   flex-shrink: 0;
 }
 
-.social-btn.wa { background: #25d366; }
-.social-btn.tg { background: #0088cc; }
+.social-btn.wa,
+.social-btn.whatsapp { background: #25d366; }
+
+.social-btn.tg,
+.social-btn.telegram { background: #0088cc; }
 
 .lang-switcher {
   display: flex;
@@ -127,7 +130,9 @@ header {
   color: #fff;
 }
 
-.btn-consult {
+.btn-consult,
+.consultation-btn,
+.header-consultation {
   background: var(--gold);
   color: #fff;
   font-family: 'Montserrat', sans-serif;
@@ -142,9 +147,13 @@ header {
   transition: background 0.2s;
 }
 
-.btn-consult:hover { background: var(--gold-light); }
+.btn-consult:hover,
+.consultation-btn:hover,
+.header-consultation:hover { background: var(--gold-light); }
 
-/* HERO */
+/* =====================================================
+   HERO — поддержка классов обоих проектов
+   ===================================================== */
 .hero {
   background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 40%, #1e3a5a 100%);
   min-height: calc(100vh - 68px);
@@ -174,7 +183,9 @@ header {
   z-index: 1;
 }
 
-.hero-title {
+/* Большой заголовок — проект 1: .hero-title, проект 2: .hero-title-brand */
+.hero-title,
+.hero-title-brand {
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
   font-size: 56px;
@@ -184,7 +195,9 @@ header {
   margin-bottom: 12px;
 }
 
-.hero-subtitle-label {
+/* Подпись — проект 1: .hero-subtitle-label, проект 2: .hero-subtitle-brand */
+.hero-subtitle-label,
+.hero-subtitle-brand {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 12px;
@@ -223,7 +236,9 @@ header {
   margin-bottom: 32px;
 }
 
-.hero-btns {
+/* Кнопки — проект 1: .hero-btns, проект 2: .hero-buttons */
+.hero-btns,
+.hero-buttons {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
@@ -241,11 +256,14 @@ header {
   cursor: pointer;
   text-decoration: none;
   transition: background 0.2s;
+  display: inline-block;
 }
 
 .btn-primary:hover { background: var(--gold-light); }
 
-.btn-outline {
+/* Контурная кнопка — проект 1: .btn-outline, проект 2: .btn-secondary */
+.btn-outline,
+.btn-secondary {
   background: transparent;
   color: #fff;
   font-family: 'Montserrat', sans-serif;
@@ -257,17 +275,22 @@ header {
   cursor: pointer;
   text-decoration: none;
   transition: border-color 0.2s;
+  display: inline-block;
 }
 
-.btn-outline:hover { border-color: #fff; }
+.btn-outline:hover,
+.btn-secondary:hover { border-color: #fff; }
 
+/* Сетка карточек справа — проект 1: .hero-features + .hero-feat,
+                             проект 2: .hero-features + .hero-feature */
 .hero-features {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
 
-.hero-feat {
+.hero-feat,
+.hero-feature {
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 10px;
@@ -281,7 +304,12 @@ header {
   gap: 10px;
 }
 
-.hero-feat svg { flex-shrink: 0; margin-top: 2px; }
+.hero-feat svg,
+.hero-feature svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--gold);
+}
 
 /* SECTIONS */
 section { padding: 80px 24px; }
@@ -297,7 +325,8 @@ section { padding: 80px 24px; }
   margin-bottom: 12px;
 }
 
-.section-desc {
+.section-desc,
+.section-subtitle {
   text-align: center;
   color: var(--text-gray);
   font-size: 16px;
@@ -322,6 +351,8 @@ section { padding: 80px 24px; }
   border-radius: 12px;
   padding: 28px 24px;
   border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
 }
 
 .problem-icon {
@@ -329,9 +360,11 @@ section { padding: 80px 24px; }
   height: 36px;
   margin-bottom: 12px;
   color: var(--gold);
+  flex-shrink: 0;
 }
 
-.problem-card p {
+.problem-card p,
+.problem-card span {
   font-size: 15px;
   color: var(--text-dark);
   line-height: 1.5;
@@ -347,7 +380,8 @@ section { padding: 80px 24px; }
 .problems-note span { color: var(--gold); }
 
 /* SERVICES */
-.services { background: #fff; }
+.services,
+.services-section { background: #fff; }
 
 .services-grid {
   display: grid;
@@ -365,7 +399,9 @@ section { padding: 80px 24px; }
 
 .service-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
 
-.service-icon-wrap {
+/* проект 1: .service-icon-wrap, проект 2: .service-icon */
+.service-icon-wrap,
+.service-icon {
   width: 52px;
   height: 52px;
   background: var(--navy);
@@ -375,9 +411,11 @@ section { padding: 80px 24px; }
   justify-content: center;
   margin-bottom: 16px;
   color: #fff;
+  flex-shrink: 0;
 }
 
-.service-card h3 {
+.service-card h3,
+.service-card p {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 15px;
@@ -401,7 +439,9 @@ section { padding: 80px 24px; }
   border: 1px solid var(--border);
 }
 
-.why-icon-wrap {
+/* проект 1: .why-icon-wrap, проект 2: .why-icon */
+.why-icon-wrap,
+.why-icon {
   width: 52px;
   height: 52px;
   background: var(--gold);
@@ -411,6 +451,7 @@ section { padding: 80px 24px; }
   justify-content: center;
   margin-bottom: 16px;
   color: #fff;
+  flex-shrink: 0;
 }
 
 .why-card h3 {
@@ -421,6 +462,46 @@ section { padding: 80px 24px; }
 }
 
 .why-card p { font-size: 14px; color: var(--text-gray); }
+
+/* OUTSOURCE (проект 2) */
+.outsource-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  text-align: center;
+  margin: 60px 0 28px;
+  color: var(--text-dark);
+}
+
+.outsource-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.outsource-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 20px;
+}
+
+.outsource-num {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 40px;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.outsource-card h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.outsource-card p { font-size: 13px; color: var(--text-gray); line-height: 1.6; }
 
 /* HOW WE WORK */
 .how { background: #fff; }
@@ -456,6 +537,9 @@ section { padding: 80px 24px; }
 
 .step-card p { font-size: 13px; color: var(--text-gray); line-height: 1.6; }
 
+/* WHO */
+.who-section { background: #fff; }
+
 .who-title {
   font-family: 'Montserrat', sans-serif;
   font-weight: 800;
@@ -466,14 +550,17 @@ section { padding: 80px 24px; }
 
 .who-desc { text-align: center; color: var(--text-gray); font-size: 15px; margin-bottom: 28px; }
 
-.tags-wrap {
+/* проект 1: .tags-wrap + .tag, проект 2: .who-tags + .who-tag */
+.tags-wrap,
+.who-tags {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
 }
 
-.tag {
+.tag,
+.who-tag {
   background: transparent;
   border: 1px solid var(--border);
   border-radius: 20px;
@@ -483,7 +570,24 @@ section { padding: 80px 24px; }
 }
 
 /* WHEN */
-.when { background: var(--light-bg); }
+.when,
+.when-section { background: var(--light-bg); }
+
+.when-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  text-align: center;
+  margin: 60px 0 10px;
+  color: var(--text-dark);
+}
+
+.when-subtitle {
+  text-align: center;
+  color: var(--text-gray);
+  font-size: 15px;
+  margin-bottom: 28px;
+}
 
 .when-grid {
   display: grid;
@@ -491,7 +595,9 @@ section { padding: 80px 24px; }
   gap: 12px;
 }
 
-.when-item {
+/* проект 1: .when-item, проект 2: .when-card */
+.when-item,
+.when-card {
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -502,6 +608,7 @@ section { padding: 80px 24px; }
   font-size: 15px;
 }
 
+/* проект 1: .when-icon, проект 2: .when-icon */
 .when-icon {
   width: 36px;
   height: 36px;
@@ -514,8 +621,9 @@ section { padding: 80px 24px; }
   color: #fff;
 }
 
-/* TRUST */
-.trust { background: #fff; }
+/* CLIENTS / TRUST */
+.trust,
+.clients { background: #fff; }
 
 .clients-grid {
   display: grid;
@@ -523,7 +631,9 @@ section { padding: 80px 24px; }
   gap: 12px;
 }
 
-.client-item {
+/* проект 1: .client-item, проект 2: .client-card */
+.client-item,
+.client-card {
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 18px 12px;
@@ -535,8 +645,9 @@ section { padding: 80px 24px; }
   color: var(--text-dark);
 }
 
-/* CTA FORM */
-.cta {
+/* FORM SECTION */
+.cta,
+.form-section {
   background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
   padding: 80px 24px;
 }
@@ -554,7 +665,9 @@ section { padding: 80px 24px; }
 
 .cta-desc { text-align: center; color: #94b4cc; font-size: 16px; margin-bottom: 40px; }
 
-.form-wrap {
+/* проект 1: .form-wrap, проект 2: .form-card */
+.form-wrap,
+.form-card {
   background: #fff;
   border-radius: 16px;
   padding: 40px;
@@ -562,17 +675,20 @@ section { padding: 80px 24px; }
   margin: 0 auto;
 }
 
+.form-card h3,
 .form-title {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 22px;
   text-align: center;
   margin-bottom: 28px;
+  color: var(--text-dark);
 }
 
 .form-group { margin-bottom: 20px; }
 
-.form-group label {
+.form-group label,
+.form-label {
   display: block;
   font-size: 14px;
   font-weight: 600;
@@ -582,7 +698,9 @@ section { padding: 80px 24px; }
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-input,
+.form-textarea {
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -596,13 +714,18 @@ section { padding: 80px 24px; }
 }
 
 .form-group input:focus,
-.form-group textarea:focus { border-color: var(--navy); }
+.form-group textarea:focus,
+.form-input:focus,
+.form-textarea:focus { border-color: var(--navy); }
 
-.form-group textarea { height: 100px; resize: vertical; }
+.form-group textarea,
+.form-textarea { height: 100px; resize: vertical; }
 
-.form-hint { font-size: 12px; color: var(--text-gray); margin-top: 4px; font-family: 'Open Sans', sans-serif; }
+.form-hint { font-size: 12px; color: var(--text-gray); margin-top: 4px; }
 
-.btn-submit {
+/* проект 1: .btn-submit, проект 2: .submit-btn */
+.btn-submit,
+.submit-btn {
   width: 100%;
   background: var(--gold);
   color: #fff;
@@ -617,18 +740,39 @@ section { padding: 80px 24px; }
   margin-top: 8px;
 }
 
-.btn-submit:hover { background: var(--gold-light); }
+.btn-submit:hover,
+.submit-btn:hover { background: var(--gold-light); }
 
-.form-privacy {
+.form-privacy,
+.form-consent {
   text-align: center;
   font-size: 12px;
   color: var(--text-gray);
   margin-top: 12px;
-  font-family: 'Open Sans', sans-serif;
 }
 
+/* SUCCESS BLOCK (проект 2) */
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.success-icon { font-size: 48px; margin-bottom: 16px; }
+
+.form-success h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: var(--text-dark);
+}
+
+.form-success p { font-size: 15px; color: var(--text-gray); }
+
 /* FAQ */
-.faq { background: var(--light-bg); }
+.faq,
+.faq-section { background: var(--light-bg); }
 
 .faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
 
@@ -639,7 +783,13 @@ section { padding: 80px 24px; }
   overflow: hidden;
 }
 
-.faq-q {
+/* проект 1: .faq-q div, проект 2: button.faq-question */
+.faq-q,
+.faq-question {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
   padding: 20px 24px;
   display: flex;
   justify-content: space-between;
@@ -649,12 +799,23 @@ section { padding: 80px 24px; }
   font-size: 15px;
   user-select: none;
   font-family: 'Open Sans', sans-serif;
+  color: var(--text-dark);
 }
 
-.faq-q svg { flex-shrink: 0; transition: transform 0.3s; }
-.faq-item.open .faq-q svg { transform: rotate(180deg); }
+.faq-q svg,
+.faq-question svg,
+.faq-chevron {
+  flex-shrink: 0;
+  transition: transform 0.3s;
+}
 
-.faq-a {
+.faq-item.open .faq-q svg,
+.faq-item.open .faq-question svg,
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+/* проект 1: .faq-a, проект 2: .faq-answer */
+.faq-a,
+.faq-answer {
   padding: 0 24px;
   max-height: 0;
   overflow: hidden;
@@ -665,21 +826,22 @@ section { padding: 80px 24px; }
   font-family: 'Open Sans', sans-serif;
 }
 
-.faq-item.open .faq-a {
-  max-height: 200px;
+.faq-item.open .faq-a,
+.faq-item.open .faq-answer {
+  max-height: 300px;
   padding: 0 24px 20px;
 }
 
+.faq-answer-inner { /* проект 2 */ }
+
 /* FOOTER */
-footer {
+footer,
+.footer {
   background: var(--navy-dark);
   padding: 60px 24px 24px;
 }
 
-.footer-inner {
-  max-width: 1300px;
-  margin: 0 auto;
-}
+.footer-inner { max-width: 1300px; margin: 0 auto; }
 
 .footer-top {
   display: grid;
@@ -698,7 +860,8 @@ footer {
   text-transform: uppercase;
 }
 
-.footer-tagline { color: #94b4cc; font-size: 14px; line-height: 1.6; font-family: 'Open Sans', sans-serif; }
+.footer-tagline,
+.footer-desc { color: #94b4cc; font-size: 14px; line-height: 1.6; }
 
 .footer-contacts { display: flex; flex-direction: column; gap: 14px; }
 
@@ -709,7 +872,6 @@ footer {
   color: #94b4cc;
   font-size: 14px;
   text-decoration: none;
-  font-family: 'Open Sans', sans-serif;
 }
 
 .footer-contact svg { color: var(--gold); flex-shrink: 0; }
@@ -721,7 +883,6 @@ footer {
   text-align: center;
   color: #6a8aaa;
   font-size: 13px;
-  font-family: 'Open Sans', sans-serif;
 }
 
 /* MODAL */
@@ -762,11 +923,7 @@ footer {
   line-height: 1;
 }
 
-.success-msg {
-  text-align: center;
-  padding: 20px 0;
-}
-
+.success-msg { text-align: center; padding: 20px 0; }
 .success-msg svg { color: #22c55e; margin-bottom: 16px; }
 
 .success-msg h3 {
@@ -776,60 +933,103 @@ footer {
   margin-bottom: 8px;
 }
 
-.success-msg p { color: var(--text-gray); font-size: 15px; font-family: 'Open Sans', sans-serif; }
+.success-msg p { color: var(--text-gray); font-size: 15px; }
 
-/* RESPONSIVE — TABLET (≤1024px) */
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 15px;
+  z-index: 9999;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  display: none;
+}
+
+/* =====================================================
+   RESPONSIVE — TABLET (≤1024px)
+   ===================================================== */
 @media (max-width: 1024px) {
-  .hero-title { font-size: 42px; }
-  .problems-grid, .services-grid, .why-grid { grid-template-columns: repeat(2, 1fr); }
-  .steps-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-title,
+  .hero-title-brand { font-size: 42px; }
+
+  .problems-grid,
+  .services-grid,
+  .why-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .steps-grid,
+  .outsource-grid { grid-template-columns: repeat(2, 1fr); }
+
   .clients-grid { grid-template-columns: repeat(3, 1fr); }
+
   .header-phone { display: none; }
   .header-inner { height: 60px; }
 }
 
-/* RESPONSIVE — MOBILE (≤768px) */
+/* =====================================================
+   RESPONSIVE — MOBILE (≤768px)
+   ===================================================== */
 @media (max-width: 768px) {
   .header-inner { height: 56px; padding: 0 16px; }
   .logo-text { font-size: 11px; }
   .logo-icon { width: 36px; height: 36px; }
   .header-phone { display: none; }
-  .btn-consult { display: none; }
+  .btn-consult,
+  .consultation-btn,
+  .header-consultation { display: none; }
   .social-btn { width: 34px; height: 34px; }
   .header-right { gap: 8px; }
 
   .hero { padding: 40px 16px; min-height: unset; }
   .hero-inner { grid-template-columns: 1fr; gap: 28px; }
-  .hero-title { font-size: 32px; }
+
+  .hero-title,
+  .hero-title-brand { font-size: 32px; }
+
   .hero-heading { font-size: 20px; }
+
   .hero-features { grid-template-columns: 1fr; gap: 8px; }
-  .hero-btns { flex-direction: column; }
-  .btn-primary, .btn-outline { width: 100%; text-align: center; padding: 14px 20px; }
+
+  .hero-btns,
+  .hero-buttons { flex-direction: column; }
+
+  .btn-primary,
+  .btn-outline,
+  .btn-secondary { width: 100%; text-align: center; padding: 14px 20px; }
 
   section { padding: 52px 16px; }
   .section-title { font-size: 26px; }
   .cta-title { font-size: 24px; }
-  .who-title { font-size: 26px; }
-  .problems-grid, .services-grid, .why-grid { grid-template-columns: 1fr; }
-  .steps-grid { grid-template-columns: 1fr; }
+  .who-title,
+  .outsource-title,
+  .when-title { font-size: 22px; }
+
+  .problems-grid,
+  .services-grid,
+  .why-grid { grid-template-columns: 1fr; }
+
+  .steps-grid,
+  .outsource-grid { grid-template-columns: 1fr; }
+
   .when-grid { grid-template-columns: 1fr; }
+
   .clients-grid { grid-template-columns: repeat(2, 1fr); }
+
   .footer-top { grid-template-columns: 1fr; gap: 32px; }
-  .form-wrap { padding: 24px 16px; }
+
+  .form-wrap,
+  .form-card { padding: 24px 16px; }
 }
 
+/* Google Translate */
 .hero-left { order: 1; }
 .hero-features { order: 2; }
 .goog-te-banner-frame { display: none !important; }
 body { top: 0 !important; }
 .skiptranslate { display: none !important; }
 #google_translate_element { display: none; }
-
-/* Ограничение на 12 цифр в телефоне */
-input[type="tel"],
-input[id*="phone"],
-input[id*="f-phone"],
-input[id*="fphone"],
-input[placeholder*="998"] {
-  max-width: 100%;
-}
