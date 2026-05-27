@@ -116,7 +116,7 @@ header {
   cursor: pointer;
   border: none;
   background: transparent;
-  font-family: inherit;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 13px;
   color: var(--text-dark);
@@ -578,6 +578,7 @@ section { padding: 80px 24px; }
   font-weight: 600;
   margin-bottom: 6px;
   color: var(--text-dark);
+  font-family: 'Montserrat', sans-serif;
 }
 
 .form-group input,
@@ -599,7 +600,7 @@ section { padding: 80px 24px; }
 
 .form-group textarea { height: 100px; resize: vertical; }
 
-.form-hint { font-size: 12px; color: var(--text-gray); margin-top: 4px; }
+.form-hint { font-size: 12px; color: var(--text-gray); margin-top: 4px; font-family: 'Open Sans', sans-serif; }
 
 .btn-submit {
   width: 100%;
@@ -623,6 +624,7 @@ section { padding: 80px 24px; }
   font-size: 12px;
   color: var(--text-gray);
   margin-top: 12px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 /* FAQ */
@@ -646,6 +648,7 @@ section { padding: 80px 24px; }
   font-weight: 600;
   font-size: 15px;
   user-select: none;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .faq-q svg { flex-shrink: 0; transition: transform 0.3s; }
@@ -659,6 +662,7 @@ section { padding: 80px 24px; }
   font-size: 14px;
   color: var(--text-gray);
   line-height: 1.7;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .faq-item.open .faq-a {
@@ -694,7 +698,7 @@ footer {
   text-transform: uppercase;
 }
 
-.footer-tagline { color: #94b4cc; font-size: 14px; line-height: 1.6; }
+.footer-tagline { color: #94b4cc; font-size: 14px; line-height: 1.6; font-family: 'Open Sans', sans-serif; }
 
 .footer-contacts { display: flex; flex-direction: column; gap: 14px; }
 
@@ -705,6 +709,7 @@ footer {
   color: #94b4cc;
   font-size: 14px;
   text-decoration: none;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .footer-contact svg { color: var(--gold); flex-shrink: 0; }
@@ -716,6 +721,7 @@ footer {
   text-align: center;
   color: #6a8aaa;
   font-size: 13px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 /* MODAL */
@@ -770,7 +776,7 @@ footer {
   margin-bottom: 8px;
 }
 
-.success-msg p { color: var(--text-gray); font-size: 15px; }
+.success-msg p { color: var(--text-gray); font-size: 15px; font-family: 'Open Sans', sans-serif; }
 
 /* RESPONSIVE — TABLET (≤1024px) */
 @media (max-width: 1024px) {
@@ -820,6 +826,10 @@ body { top: 0 !important; }
 #google_translate_element { display: none; }
 
 /* Ограничение на 12 цифр в телефоне */
-input[type="tel"] {
+input[type="tel"],
+input[id*="phone"],
+input[id*="f-phone"],
+input[id*="fphone"],
+input[placeholder*="998"] {
   max-width: 100%;
 }
