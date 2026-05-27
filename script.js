@@ -44,6 +44,7 @@ function setLang(lang) {
   });
   
   document.documentElement.lang = lang;
+  localStorage.setItem('site-lang', lang);
 }
 
 // ===== FAQ TOGGLE =====
