@@ -1,190 +1,247 @@
-// ===== PHONE INPUT LIMIT (max 12 digits) =====
-function limitPhoneInput(input) {
-  // Remove non-digit characters except +
-  let value = input.value.replace(/[^\d+]/g, '');
-  
-  // Limit to 12 digits after +998
-  if (value.startsWith('+998')) {
-    value = '+998' + value.slice(4).substring(0, 9);
-  } else if (value.startsWith('+')) {
-    value = '+' + value.slice(1).substring(0, 11);
-  } else {
-    value = value.substring(0, 12);
-  }
-  
-  input.value = value;
-}
+// ===== LANGUAGE SYSTEM =====
+let currentLang = 'ru';
 
-// Apply listener to all phone inputs
-document.addEventListener('DOMContentLoaded', function() {
-  const phoneInputs = document.querySelectorAll('input[type="tel"], input[id*="phone"], input[id*="f-phone"], input[id*="fphone"]');
-  phoneInputs.forEach(input => {
-    input.addEventListener('input', function() {
-      limitPhoneInput(this);
-    });
-  });
-});
-
-// ===== LANGUAGE SWITCHER =====
 function setLang(lang) {
-  document.querySelectorAll('[data-ru], [data-uz], [data-i18n]').forEach(el => {
-    if (el.hasAttribute('data-ru') && el.hasAttribute('data-uz')) {
-      el.textContent = lang === 'ru' ? el.getAttribute('data-ru') : el.getAttribute('data-uz');
-    } else if (el.hasAttribute('data-i18n')) {
-      const key = el.getAttribute('data-i18n');
-      if (window.translations && window.translations[lang] && window.translations[lang][key]) {
-        el.textContent = window.translations[lang][key];
-      }
+  currentLang = lang;
+
+  document.querySelectorAll('[data-ru], [data-uz]').forEach(el => {
+    const val = el.getAttribute('data-' + lang);
+    if (!val) return;
+
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      el.placeholder = el.getAttribute('data-ph-' + lang) || val;
+    } else {
+      el.innerHTML = val;
     }
   });
-  
-  // Update button states
-  document.querySelectorAll('.lang-btn, [data-lang]').forEach(btn => {
-    btn.classList.toggle('active', btn.textContent === (lang === 'ru' ? 'RU' : 'UZ') || btn.getAttribute('data-lang') === lang);
+
+  document.querySelectorAll('[data-ph-' + lang + ']').forEach(el => {
+    el.placeholder = el.getAttribute('data-ph-' + lang);
   });
-  
+
+  const btnRu = document.getElementById('btn-ru');
+  const btnUz = document.getElementById('btn-uz');
+  if (btnRu) btnRu.classList.toggle('active', lang === 'ru');
+  if (btnUz) btnUz.classList.toggle('active', lang === 'uz');
+
   document.documentElement.lang = lang;
   localStorage.setItem('site-lang', lang);
 }
 
-// ===== FAQ TOGGLE =====
-function toggleFaq(element) {
-  const item = element.closest('.faq-item');
-  if (item) {
-    item.classList.toggle('open');
-  }
+// ===== PHONE INPUT =====
+// Always starts with +998, max 9 digits after prefix (12 chars total)
+function initPhoneInput() {
+  const PREFIX = '+998';
+
+  const phoneInputs = document.querySelectorAll(
+    'input[type="tel"], input[id*="phone"], input[id*="Phone"], #field-phone, #f-phone'
+  );
+
+  phoneInputs.forEach(input => {
+    if (!input.value.startsWith(PREFIX)) {
+      input.value = PREFIX;
+    }
+
+    input.addEventListener('input', function () {
+      let digits = this.value.replace(/\D/g, '');
+
+      // Strip 998 prefix if present to avoid doubling
+      if (digits.startsWith('998')) {
+        digits = digits.slice(3);
+      }
+
+      // Limit to 9 digits after +998
+      digits = digits.substring(0, 9);
+
+      this.value = PREFIX + digits;
+    });
+
+    input.addEventListener('keydown', function (e) {
+      // Block deleting into the prefix
+      if (
+        (e.key === 'Backspace' || e.key === 'Delete') &&
+        this.selectionStart <= PREFIX.length &&
+        this.selectionEnd <= PREFIX.length
+      ) {
+        e.preventDefault();
+      }
+    });
+
+    input.addEventListener('click', function () {
+      if (this.selectionStart < PREFIX.length) {
+        this.setSelectionRange(this.value.length, this.value.length);
+      }
+    });
+
+    input.addEventListener('focus', function () {
+      if (!this.value.startsWith(PREFIX)) {
+        this.value = PREFIX;
+      }
+      setTimeout(() => {
+        this.setSelectionRange(this.value.length, this.value.length);
+      }, 0);
+    });
+  });
 }
 
-// ===== FORM SUBMISSION =====
-async function sendToTelegram() {
-  const nameInput = document.getElementById('f-name') || document.getElementById('fname');
-  const phoneInput = document.getElementById('f-phone') || document.getElementById('fphone') || document.getElementById('formPhone');
-  const messageInput = document.getElementById('f-message') || document.getElementById('fmsg') || document.getElementById('formMsg');
-  
+// ===== FAQ TOGGLE =====
+function toggleFaq(element) {
+  const item = element.closest
+    ? element.closest('.faq-item')
+    : element.parentElement;
+
+  if (!item) return;
+
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ===== FORM SUBMISSION via Telegram Bot =====
+async function submitForm() {
+  const nameInput  = document.getElementById('field-name')    || document.getElementById('f-name');
+  const phoneInput = document.getElementById('field-phone')   || document.getElementById('f-phone');
+  const msgInput   = document.getElementById('field-message') || document.getElementById('f-message');
+
   if (!nameInput || !phoneInput) return;
-  
-  const name = nameInput.value.trim();
+
+  const name  = nameInput.value.trim();
   const phone = phoneInput.value.trim();
-  const message = messageInput ? messageInput.value.trim() : '';
-  
-  if (!name || !phone || phone === '+998') {
-    alert('Пожалуйста, заполните имя и номер телефона');
+  const msg   = msgInput ? msgInput.value.trim() : '';
+
+  const PREFIX = '+998';
+
+  if (!name) {
+    alert(currentLang === 'uz' ? 'Ismingizni kiriting' : 'Введите ваше имя');
     return;
   }
-  
-  const text = `📩 Новая заявка с сайта!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}${message ? '\n💬 Сообщение: ' + message : ''}`;
-  
+
+  if (!phone || phone === PREFIX || phone.length < PREFIX.length + 9) {
+    alert(currentLang === 'uz' ? "Telefon raqamini to'liq kiriting" : 'Введите полный номер телефона');
+    return;
+  }
+
+  const text = `🔔 Новая заявка с сайта Business Law Consulting\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n💬 Сообщение: ${msg || '—'}`;
+
+  const TOKEN   = '8830532011:AAGJ6A7LZmmWT1c2Qi2YxZRJHpOd62FNN1w';
+  const CHAT_ID = '-5102240344';
+
   try {
-    const response = await fetch('https://api.telegram.org/bot8830532011:AAGJ6A7LZmmWT1c2Qi2YxZRJHpOd62FNN1w/sendMessage', {
-      method: 'POST',
+    const res  = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+      method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: '-5102240344',
-        text: text
-      })
+      body:    JSON.stringify({ chat_id: CHAT_ID, text, parse_mode: 'HTML' })
     });
-    
-    const data = await response.json();
+    const data = await res.json();
+
     if (data.ok) {
-      alert('✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
-      if (nameInput) nameInput.value = '';
-      if (phoneInput) phoneInput.value = '+998';
-      if (messageInput) messageInput.value = '';
+      nameInput.value  = '';
+      phoneInput.value = PREFIX;
+      if (msgInput) msgInput.value = '';
+
+      // Show success — try modal, then inline block, then toast
+      const modal   = document.getElementById('modal');
+      const success = document.getElementById('form-success');
+      const fields  = document.getElementById('form-fields');
+
+      if (modal) {
+        modal.classList.add('open');
+      } else if (success && fields) {
+        fields.style.display  = 'none';
+        success.style.display = 'block';
+        setTimeout(() => {
+          success.style.display = 'none';
+          fields.style.display  = 'block';
+        }, 4000);
+      } else {
+        showToast(currentLang === 'uz'
+          ? '✓ Ariza yuborildi! Siz bilan boglanamiz.'
+          : '✓ Заявка отправлена! Мы свяжемся с вами.');
+      }
     } else {
       alert('Ошибка отправки. Позвоните нам: +998 90 888-44-66');
     }
-  } catch (error) {
-    alert('Ошибка отправки. Позвоните нам: +998 90 888-44-66');
+  } catch (e) {
+    alert('Ошибка соединения. Позвоните нам: +998 90 888-44-66');
   }
 }
 
-// ===== FORM SUBMIT for pamus4 =====
-function submitForm() {
-  const nameInput = document.getElementById('formName');
-  const phoneInput = document.getElementById('formPhone');
-  const msgInput = document.getElementById('formMsg');
-  
-  if (!nameInput || !phoneInput) {
-    sendToTelegram();
-    return;
+// ===== TOAST NOTIFICATION =====
+function showToast(message) {
+  let toast = document.getElementById('toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.style.cssText = [
+      'position:fixed', 'bottom:24px', 'left:50%', 'transform:translateX(-50%)',
+      'background:#1a2b47', 'color:#fff', 'padding:14px 28px', 'border-radius:10px',
+      "font-size:15px", "font-family:'Open Sans',sans-serif", 'z-index:9999',
+      'box-shadow:0 4px 20px rgba(0,0,0,0.25)', 'transition:opacity 0.4s'
+    ].join(';');
+    document.body.appendChild(toast);
   }
-  
-  const name = nameInput.value.trim();
-  const phone = phoneInput.value.trim();
-  const msg = msgInput ? msgInput.value.trim() : '';
-  
-  if (!name || !phone || phone === '+998') {
-    alert('Пожалуйста, заполните имя и номер телефона');
-    return;
-  }
-  
-  const text = `📩 Новая заявка с сайта!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}${msg ? '\n💬 Сообщение: ' + msg : ''}`;
-  
-  fetch('https://api.telegram.org/bot8830532011:AAGJ6A7LZmmWT1c2Qi2YxZRJHpOd62FNN1w/sendMessage', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: '-5102240344',
-      text: text
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.ok) {
-      document.getElementById('formSuccess').style.display = 'block';
-      document.getElementById('contactForm').style.display = 'none';
-      setTimeout(() => {
-        document.getElementById('formSuccess').style.display = 'none';
-        document.getElementById('contactForm').style.display = 'block';
-        nameInput.value = '';
-        phoneInput.value = '+998';
-        if (msgInput) msgInput.value = '';
-      }, 3000);
-    }
-  })
-  .catch(() => alert('Ошибка отправки. Позвоните нам: +998 90 888-44-66'));
+  toast.textContent  = message;
+  toast.style.opacity = '1';
+  toast.style.display = 'block';
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => { toast.style.display = 'none'; }, 400);
+  }, 3500);
 }
 
-// ===== SCROLL TO FORM =====
-function scrollToForm() {
-  const formSection = document.getElementById('contact') || document.getElementById('cta');
-  if (formSection) {
-    formSection.scrollIntoView({ behavior: 'smooth' });
-  }
+// ===== MODAL =====
+function closeModal() {
+  const modal = document.getElementById('modal');
+  if (modal) modal.classList.remove('open');
 }
 
-// ===== MOBILE MENU TOGGLE =====
-function toggleMenu() {
-  const menu = document.getElementById('mobileMenu');
-  if (menu) {
-    menu.classList.toggle('active');
-  }
-  const burger = document.getElementById('burger');
-  if (burger) {
-    burger.classList.toggle('active');
-  }
-}
-
-// ===== INITIALIZE ON PAGE LOAD =====
-document.addEventListener('DOMContentLoaded', function() {
-  // Set default language
-  const savedLang = localStorage.getItem('site-lang') || 'ru';
-  setLang(savedLang);
-  
-  // Add listeners to all phone inputs
-  const phoneInputs = document.querySelectorAll('input[type="tel"], input[id*="phone"], input[id*="f-phone"], input[id*="fphone"], input[placeholder*="998"]');
-  phoneInputs.forEach(input => {
-    input.addEventListener('input', function() {
-      limitPhoneInput(this);
+// ===== SMOOTH SCROLLING =====
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   });
-  
-  // Add FAQ toggle listeners
-  document.querySelectorAll('.faq-question, .faq-q, [onclick*="toggleFaq"]').forEach(btn => {
-    if (!btn.hasAttribute('onclick')) {
-      btn.addEventListener('click', function() {
-        toggleFaq(this);
-      });
-    }
+}
+
+// ===== GOOGLE TRANSLATE INIT =====
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage:      'ru',
+    includedLanguages: 'ru,uz,en',
+    layout:            google.translate.TranslateElement.InlineLayout.SIMPLE,
+    autoDisplay:       false
+  }, 'google_translate_element');
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', function () {
+  // Restore saved language
+  const savedLang = localStorage.getItem('site-lang') || 'ru';
+  setLang(savedLang);
+
+  // Phone inputs
+  initPhoneInput();
+
+  // Smooth scroll
+  initSmoothScroll();
+
+  // Modal click-outside to close
+  const modal = document.getElementById('modal');
+  if (modal) {
+    modal.addEventListener('click', function (e) {
+      if (e.target === this) closeModal();
+    });
+  }
+
+  // FAQ: project 2 uses button.faq-question (no onclick attr)
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', function () {
+      toggleFaq(this);
+    });
   });
 });
