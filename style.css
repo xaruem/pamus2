@@ -14,7 +14,11 @@
   --card-bg: #ffffff;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -23,7 +27,7 @@ body {
   overflow-x: hidden;
 }
 
-/* HEADER */
+/* ЗАГОЛОВОК */
 header {
   background: #fff;
   border-bottom: 1px solid var(--border);
@@ -85,7 +89,9 @@ header {
   white-space: nowrap;
 }
 
-.header-phone svg { color: var(--navy); }
+.header-phone svg {
+  color: var(--navy);
+}
 
 .social-btn {
   width: 38px;
@@ -98,11 +104,13 @@ header {
   flex-shrink: 0;
 }
 
-.social-btn.wa,
-.social-btn.whatsapp { background: #25d366; }
+.social-btn.wa {
+  background: #25d366;
+}
 
-.social-btn.tg,
-.social-btn.telegram { background: #0088cc; }
+.social-btn.tg {
+  background: #0088cc;
+}
 
 .lang-switcher {
   display: flex;
@@ -119,7 +127,7 @@ header {
   cursor: pointer;
   border: none;
   background: transparent;
-  font-family: 'Montserrat', sans-serif;
+  font-family: inherit;
   font-weight: 600;
   font-size: 13px;
   color: var(--text-dark);
@@ -130,9 +138,7 @@ header {
   color: #fff;
 }
 
-.btn-consult,
-.consultation-btn,
-.header-consultation {
+.btn-consult {
   background: var(--gold);
   color: #fff;
   font-family: 'Montserrat', sans-serif;
@@ -147,13 +153,11 @@ header {
   transition: background 0.2s;
 }
 
-.btn-consult:hover,
-.consultation-btn:hover,
-.header-consultation:hover { background: var(--gold-light); }
+.btn-consult:hover {
+  background: var(--gold-light);
+}
 
-/* =====================================================
-   HERO — поддержка классов обоих проектов
-   ===================================================== */
+/* HERO */
 .hero {
   background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 40%, #1e3a5a 100%);
   min-height: calc(100vh - 68px);
@@ -183,9 +187,7 @@ header {
   z-index: 1;
 }
 
-/* Большой заголовок — проект 1: .hero-title, проект 2: .hero-title-brand */
-.hero-title,
-.hero-title-brand {
+.hero-title {
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
   font-size: 56px;
@@ -195,9 +197,7 @@ header {
   margin-bottom: 12px;
 }
 
-/* Подпись — проект 1: .hero-subtitle-label, проект 2: .hero-subtitle-brand */
-.hero-subtitle-label,
-.hero-subtitle-brand {
+.hero-subtitle-label {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 12px;
@@ -236,9 +236,7 @@ header {
   margin-bottom: 32px;
 }
 
-/* Кнопки — проект 1: .hero-btns, проект 2: .hero-buttons */
-.hero-btns,
-.hero-buttons {
+.hero-btns {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
@@ -256,14 +254,13 @@ header {
   cursor: pointer;
   text-decoration: none;
   transition: background 0.2s;
-  display: inline-block;
 }
 
-.btn-primary:hover { background: var(--gold-light); }
+.btn-primary:hover {
+  background: var(--gold-light);
+}
 
-/* Контурная кнопка — проект 1: .btn-outline, проект 2: .btn-secondary */
-.btn-outline,
-.btn-secondary {
+.btn-outline {
   background: transparent;
   color: #fff;
   font-family: 'Montserrat', sans-serif;
@@ -275,22 +272,19 @@ header {
   cursor: pointer;
   text-decoration: none;
   transition: border-color 0.2s;
-  display: inline-block;
 }
 
-.btn-outline:hover,
-.btn-secondary:hover { border-color: #fff; }
+.btn-outline:hover {
+  border-color: #fff;
+}
 
-/* Сетка карточек справа — проект 1: .hero-features + .hero-feat,
-                             проект 2: .hero-features + .hero-feature */
 .hero-features {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
 
-.hero-feat,
-.hero-feature {
+.hero-feat {
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 10px;
@@ -304,11 +298,9 @@ header {
   gap: 10px;
 }
 
-.hero-feat svg,
-.hero-feature svg {
+.hero-feat svg {
   flex-shrink: 0;
   margin-top: 2px;
-  color: var(--gold);
 }
 
 /* SECTIONS */
